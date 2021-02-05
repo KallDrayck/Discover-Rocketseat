@@ -43,6 +43,12 @@ const Transaction = {
         App.reload()
     },
 
+    edit(index){
+
+
+        App.reload()
+    },
+
     //somar as entradas
     incomes() {
         let income = 0;
@@ -80,6 +86,13 @@ const DOM = {
 
         DOM.transactionsContainer.appendChild(tr)
     },
+    editTransaction(transaction, index) {
+        const position = index
+        position.innerHTML = DOM.innerHTMLTransaction(transaction, index)
+        position.dataset.index = index
+
+        DOM.transactionsContainer.appendChild(position)
+    },
 
     innerHTMLTransaction(transaction, index) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
@@ -92,6 +105,7 @@ const DOM = {
         <td class="date">${transaction.date}</td>
         <td>
             <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
+            <img onclick="Transaction.edit(${console.log("devolve a posição do array "+index)})" src="./assets/plus.svg" alt="Editar transação">
         </td>
         `
 
@@ -160,10 +174,14 @@ const Form = {
         const { description, amount, date } = Form.getValues()
 
         if (description.trim() === "" ||
-            amount.trim() === "" ||
-            date.trim() === "") {
+            amount.trim() === "") {
             throw new Error("Por favor, preencha todos os campos")
         }
+        // if(date.trim() === ""){
+        //     // console.log("data.trim() = " + data.trim())
+        //     data() = "0000/00/00";
+        // }
+        console.log("o que é a data.trim()" + date.trim())
     },
 
     formatValues() {
